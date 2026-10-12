@@ -102,17 +102,19 @@ export default function BriefClient({
   store,
   date,
   initialFacts,
+  initialBrief,
   model,
   stores,
 }: {
   store: number;
   date: string;
   initialFacts: BriefFacts | null;
+  initialBrief: BriefResponse | null;
   model: string;
   stores: { store_nbr: number; city: string }[];
 }) {
   const [facts] = useState<BriefFacts | null>(initialFacts);
-  const [brief, setBrief] = useState<BriefResponse | null>(null);
+  const [brief, setBrief] = useState<BriefResponse | null>(initialBrief);
   const [printing, setPrinting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [decisions, setDecisions] = useState<DecisionState>({});

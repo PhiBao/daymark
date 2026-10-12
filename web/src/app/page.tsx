@@ -1,5 +1,5 @@
 import BriefClient from "@/components/brief/brief-client";
-import { BriefFacts, Health, Meta, getJSON } from "@/lib/api";
+import { BriefFacts, BriefResponse, Health, Meta, getJSON } from "@/lib/api";
 
 export const instant = false;
 
@@ -12,6 +12,7 @@ export default async function Page(props: {
   const date = sp.date ?? "2017-08-14";
 
   let facts: BriefFacts | null = null;
+  let published: BriefResponse | null = null;
   let model = "";
   let stores: { store_nbr: number; city: string }[] = [];
   try {
@@ -26,6 +27,22 @@ export default async function Page(props: {
   } catch {
     facts = null;
   }
+  if (facts) {
+    try {
+      published = await getJSON<BriefResponse>(`/api/brief/${store}/published?date=${date}`);
+    } catch {
+      published = null; // not printed yet — the manager still sees the numbers
+    }
+  }
 
-  return <BriefClient store={store} date={date} initialFacts={facts} model={model} stores={stores} />;
+  return (
+    <BriefClient
+      store={store}
+      date={date}
+      initialFacts={facts}
+      initialBrief={published}
+      model={model}
+      stores={stores}
+    />
+  );
 }

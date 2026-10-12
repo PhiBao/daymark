@@ -143,6 +143,23 @@ async fn brief_generate(
     Ok(Json(resp))
 }
 
+async fn brief_published(
+    State(st): State<AppState>,
+    Path(store): Path<i16>,
+    Query(q): Query<BriefQuery>,
+) -> ApiResult<Json<BriefResponse>> {
+    let date = parse_date(q.date.as_deref().unwrap_or("2017-08-14"))?;
+    let date_s = date.to_string();
+    let cached = ledger::get_cached_brief(&st.db, store, &date_s)
+        .await?
+        .ok_or_else(|| AppError::NotFound(format!("no published brief for store {store} on {date_s}")))?;
+    let mut resp: BriefResponse = serde_json::from_value(cached.payload)
+        .map_err(|e| AppError::Internal(anyhow::anyhow!("bad cached brief: {e}")))?;
+    resp.cached = true;
+    resp.generated_at = cached.created_at;
+    Ok(Json(resp))
+}
+
 async fn decide(State(st): State<AppState>, Json(d): Json<NewDecision>) -> ApiResult<Json<Value>> {
     if !["approve", "edit", "flag", "reject"].contains(&d.action.as_str()) {
         return Err(AppError::BadRequest("action must be approve|edit|flag|reject".into()));
@@ -265,6 +282,7 @@ pub fn router(st: AppState) -> Router {
         .route("/api/health", get(health))
         .route("/api/meta", get(meta))
         .route("/api/brief/{store}", get(brief_facts))
+        .route("/api/brief/{store}/published", get(brief_published))
         .route("/api/brief/{store}/generate", post(brief_generate))
         .route("/api/decisions", post(decide))
         .route("/api/ledger", get(ledger_list))

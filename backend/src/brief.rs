@@ -161,6 +161,14 @@ pub struct BriefResponse {
     pub cached: bool,
 }
 
+/// Days of cover. Uses a finite sentinel instead of infinity so every fact
+/// round-trips through JSON (serde_json maps non-finite floats to null).
+pub const COVER_DAYS_UNKNOWN: f64 = 999.0;
+
+pub fn cover_days(onhand: f64, avg_daily: f64) -> f64 {
+    if avg_daily > 0.05 { onhand / avg_daily } else { COVER_DAYS_UNKNOWN }
+}
+
 fn why_chips(art: &ArtifactStore, store: i16, item: i32, k: usize) -> Vec<WhyChip> {
     art.attributions
         .get(&(store, item))
@@ -266,7 +274,7 @@ pub fn build_facts(art: &ArtifactStore, store: i16, date: NaiveDate) -> Result<B
                     label: item.label(),
                     family: item.family.clone(),
                     onhand,
-                    cover_days: if avg28 > 0.05 { onhand / avg28 } else { f64::INFINITY },
+                    cover_days: cover_days(onhand, avg28),
                     p10: row.p10,
                     p50: row.p50,
                     p90: row.p90,
@@ -314,7 +322,7 @@ pub fn build_facts(art: &ArtifactStore, store: i16, date: NaiveDate) -> Result<B
         let lift_raw = art.family_lift_pct(&item.family);
         let lift = lift_raw.min(MARKDOWN_LIFT_CAP);
         if let (Some(row), true) = (tomorrow, lift >= 10.0) {
-            let cover = if avg28 > 0.05 { onhand / avg28 } else { f64::INFINITY };
+            let cover = cover_days(onhand, avg28);
             let shelf = item.shelf_life_days as f64;
             if cover > shelf * 0.8 && row.p50 > 0.5 {
                 let incremental = row.p50 * lift / 100.0;
@@ -423,7 +431,7 @@ pub fn build_facts(art: &ArtifactStore, store: i16, date: NaiveDate) -> Result<B
 
     // NOTE: orders and markdowns are returned in full — the manager approves
     // what the totals count; the UI collapses long lists.
-    Ok(BriefFacts {
+    let facts = BriefFacts {
         store,
         date: date.to_string(),
         weekday: weekday_name(date),
@@ -439,7 +447,22 @@ pub fn build_facts(art: &ArtifactStore, store: i16, date: NaiveDate) -> Result<B
         promos,
         watchlist,
         assumptions: art.meta.get("assumptions").cloned().unwrap_or(json!({})),
-    })
+    };
+    // every fact must survive a JSON round-trip (serde_json turns NaN/Infinity
+    // into null, which would corrupt the cached brief and the grounding check)
+    debug_assert!(serde_json::to_value(&facts).is_ok());
+    Ok(facts)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn cover_days_never_infinite() {
+        assert_eq!(cover_days(10.0, 0.0), COVER_DAYS_UNKNOWN);
+        assert!(cover_days(10.0, 2.0).is_finite());
+    }
 }
 
 fn weekday_name(d: NaiveDate) -> String {
@@ -467,6 +490,90 @@ Hard rules:
 - headline: <= 12 words. dek: one sentence. section summaries: 2-3 sentences each, use the section totals.
 - promo_creative: for up to 2 promo items in FACTS, a shelf-talker headline and a 2-sentence body the store can print."#;
 
+/// The language model receives only what it may talk about: headline totals,
+/// the top lines of each section, and the calendar context. This keeps prompts
+/// small (cheap on AMD), and makes the grounding contract stricter — the model
+/// may only use figures it was actually shown.
+fn llm_facts(facts: &BriefFacts) -> serde_json::Value {
+    let orders: Vec<serde_json::Value> = facts
+        .orders
+        .iter()
+        .take(8)
+        .map(|o| {
+            json!({
+                "item": o.item,
+                "category": o.family,
+                "on_hand_units": o.onhand.round(),
+                "forecast_units": (o.p50 * 10.0).round() / 10.0,
+                "suggested_order_units": o.suggest_qty,
+                "shelf_life_days": o.shelf_life_days,
+                "on_promotion_today": o.promo_today,
+            })
+        })
+        .collect();
+    let markdowns: Vec<serde_json::Value> = facts
+        .markdowns
+        .iter()
+        .take(6)
+        .map(|m| {
+            json!({
+                "item": m.item,
+                "category": m.family,
+                "on_hand_units": m.onhand.round(),
+                "expires_in_days": m.expires_in_days,
+                "cut_percent": (m.cut_pct * 100.0).round(),
+                "expected_clear_units": m.expected_clear_units.round(),
+                "recovered_usd": m.recovered_usd.round(),
+            })
+        })
+        .collect();
+    let promos: Vec<serde_json::Value> = facts
+        .promos
+        .iter()
+        .map(|p| {
+            json!({
+                "item": p.item,
+                "category": p.family,
+                "measured_lift_percent": p.lift_pct.round(),
+                "on_hand_units": p.onhand.round(),
+                "expected_incremental_units": (p.expected_incremental_units * 10.0).round() / 10.0,
+            })
+        })
+        .collect();
+    json!({
+        "brief_date": facts.date,
+        "weekday": facts.weekday,
+        "orders_are_for": facts.generated_for,
+        "store": { "number": facts.store, "city": facts.store_meta.city },
+        "holiday_today": facts.holiday_today,
+        "holiday_tomorrow": facts.holiday_tomorrow,
+        "service_level": facts.service_level,
+        "yesterday": {
+            "units_sold": facts.recap.sales_units.round(),
+            "model_expected_units": facts.recap.p50_units.round(),
+            "delta_percent": (facts.recap.delta_pct * 10.0).round() / 10.0,
+            "transactions": facts.recap.traffic.round(),
+            "transactions_vs_7d_percent": (facts.recap.traffic_vs_7d_pct * 10.0).round() / 10.0,
+        },
+        "totals": {
+            "orders": facts.totals.order_lines,
+            "order_units": facts.totals.order_units,
+            "markdowns": facts.totals.markdown_lines,
+            "at_risk_units": facts.totals.at_risk_units.round(),
+            "recovered_usd": facts.totals.recovered_usd.round(),
+            "waste_avoided_usd": facts.totals.waste_avoided_usd.round(),
+            "on_hand_units": facts.totals.onhand_units.round(),
+            "expected_sales_today_units": facts.totals.expected_sales_today.round(),
+            "promo_candidates": facts.totals.promo_lines,
+            "expected_incremental_units": (facts.totals.expected_incremental_units * 10.0).round() / 10.0,
+        },
+        "orders_top8": orders,
+        "markdowns_top6": markdowns,
+        "promos": promos,
+        "watchlist_items": facts.watchlist.len(),
+    })
+}
+
 pub struct NarrativeOutcome {
     pub narrative: Narrative,
     pub grounding: GroundingReport,
@@ -475,9 +582,9 @@ pub struct NarrativeOutcome {
 }
 
 pub async fn generate_narrative(llm: &LlmClient, facts: &BriefFacts) -> Result<NarrativeOutcome> {
-    let facts_json = serde_json::to_value(facts)?;
+    let llm_payload = llm_facts(facts);
     let mut allowed: Vec<f64> = Vec::new();
-    collect_facts(&facts_json, &mut allowed);
+    collect_facts(&llm_payload, &mut allowed);
     let extra: Vec<f64> = {
         // dates the copy may reference (year / month / day components)
         let mut v = Vec::new();
@@ -492,7 +599,7 @@ pub async fn generate_narrative(llm: &LlmClient, facts: &BriefFacts) -> Result<N
         v
     };
 
-    let facts_json_str = serde_json::to_string(&facts_json)?;
+    let facts_json_str = serde_json::to_string(&llm_payload)?;
     let intro = "Write today's brief from these FACTS. Return only the JSON object.";
 
     let mut usage_total = LlmUsage::default();

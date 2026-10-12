@@ -100,5 +100,7 @@ Next.js front end: an editorial "morning edition", deliberately not a dashboard.
 - [ ] Record the video (`docs/DEMO.md`), upload (YouTube unlisted is fine), fill `[VIDEO_URL]`
 - [ ] Deploy the demo stack and fill `[DEMO_URL]` (see `infra/docker/compose.yml`)
 - [ ] Run the AMD benchmark and commit `engine/artifacts/benchmark.json`
+- [ ] Re-shoot `docs/assets/brief.png` and `docs/assets/replay.png` once the real
+      Gemma endpoint is serving (the header shows the model id)
 - [ ] Re-run `make smoke` and paste the fresh replay numbers if the simulator changed
 - [ ] Double-check character counts in the form

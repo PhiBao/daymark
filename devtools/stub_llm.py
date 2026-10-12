@@ -32,6 +32,7 @@ def facts_from_prompt(content: str) -> dict:
 
 
 def build_narrative(facts: dict) -> dict:
+    """Mirrors the condensed facts payload sent by the backend (see brief.rs llm_facts)."""
     t = facts.get("totals", {})
     promos = facts.get("promos", [])
     creative = []
@@ -39,32 +40,33 @@ def build_narrative(facts: dict) -> dict:
         creative.append(
             {
                 "item": p.get("item", 0),
-                "headline": f"{p.get('family', 'Fresh')} · today only",
+                "headline": f"{p.get('category', 'Fresh')} · today only",
                 "body": (
-                    f"Measured lift {round(p.get('lift_pct', 0))}% on this category. "
-                    f"Shelf stock covers {round(p.get('cover_days', 0))} days."
+                    f"Measured lift {round(p.get('measured_lift_percent', 0))}% on this category. "
+                    f"On hand {round(p.get('on_hand_units', 0))} units."
                 ),
             }
         )
     narrative = {
-        "headline": f"{t.get('order_lines', 0)} orders, {t.get('markdown_lines', 0)} markdowns due",
+        "headline": f"{t.get('orders', 0)} orders, {t.get('markdowns', 0)} markdowns due",
         "dek": (
-            f"{round(t.get('onhand_units', 0))} units on hand, {round(t.get('at_risk_units', 0))} at risk of expiry."
+            f"{round(t.get('on_hand_units', 0))} units on hand, "
+            f"{round(t.get('at_risk_units', 0))} at risk of expiry."
         ),
         "orders_summary": (
-            f"Place {t.get('order_lines', 0)} order lines totalling {t.get('order_units', 0)} units. "
-            f"Expected sales today: {round(t.get('expected_sales_today', 0))} units."
+            f"Place {t.get('orders', 0)} order lines totalling {t.get('order_units', 0)} units. "
+            f"Expected sales today: {round(t.get('expected_sales_today_units', 0))} units."
         ),
         "markdowns_summary": (
-            f"{t.get('markdown_lines', 0)} lines are inside their last two days, "
+            f"{t.get('markdowns', 0)} lines are inside their last two days, "
             f"covering {round(t.get('at_risk_units', 0))} units at risk. "
             f"Recovered value: {round(t.get('recovered_usd', 0))} dollars."
         ),
         "promos_summary": (
-            f"{t.get('promo_lines', 0)} promo candidates, expected "
-            f"{round(t.get('expected_incremental_units', 0))} incremental units."
+            f"{t.get('promo_candidates', 0)} promo candidates, expected "
+            f"{t.get('expected_incremental_units', 0)} incremental units."
         ),
-        "watchlist_summary": f"{len(facts.get('watchlist', []))} items flagged.",
+        "watchlist_summary": f"{facts.get('watchlist_items', 0)} items flagged.",
         "promo_creative": creative,
     }
     return narrative

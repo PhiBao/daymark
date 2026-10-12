@@ -38,6 +38,12 @@ gets none of it. Meanwhile the data needed to do better already exists in the st
 - **A tamper-evident workflow.** Approve / edit / flag decisions are appended to a
   SHA-256 hash chain, re-verified on every read.
 
+## What it looks like
+
+![The morning brief](docs/assets/brief.png)
+
+![Replay — the product proving itself](docs/assets/replay.png)
+
 ## Who it is for
 
 The **category manager** of a small-to-mid grocery chain (5–60 stores): not a data
