@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg viewBox="0 0 960 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="waste-waterfall-title waste-waterfall-desc" id="replay-waterfall-root">
-        <title id="waste-waterfall-title">Waste units fall from 5684 to 2342 across two policy changes</title>
-        <desc id="waste-waterfall-desc">A waterfall showing 5684 waste units under the spreadsheet policy, minus 2553 from quantile demand forecasts, minus 789 from the markdown engine, ending at 2342 units — a 59% reduction under identical demand.</desc>
+        <title id="waste-waterfall-title">Waste units fall from 5684 to 2374 across two policy changes</title>
+        <desc id="waste-waterfall-desc">A waterfall showing 5684 waste units under the spreadsheet policy, minus 2553 from quantile demand forecasts, minus 757 from the markdown engine, ending at 2374 units — a 58% reduction under identical demand.</desc>
         <defs>
       <style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Noto+Serif:ital@0;1&amp;family=Noto+Sans+KR:wght@400;500;600&amp;family=Noto+Serif+KR:wght@400&amp;family=Noto+Sans+TC:wght@400;500;600&amp;family=Noto+Serif+TC:wght@400&amp;display=swap');
       #replay-waterfall-root { --color-paper:   #f4f1e9;
@@ -40,38 +40,38 @@
         <text x="148" y="61" font-family="'Geist Mono', monospace" font-size="9" fill="#8b8678" text-anchor="end">6,000</text>
 
         <!-- ============ connectors (behind bars) ============ -->
-        <line x1="320" y1="57" x2="520" y2="57" stroke="#6b675c" stroke-width="1" stroke-dasharray="4,3"/>
+        <line x1="320" y1="79" x2="520" y2="79" stroke="#6b675c" stroke-width="1" stroke-dasharray="4,3"/>
         <line x1="520" y1="259" x2="680" y2="259" stroke="#6b675c" stroke-width="1" stroke-dasharray="4,3"/>
-        <line x1="680" y1="315" x2="840" y2="315" stroke="#6b675c" stroke-width="1" stroke-dasharray="4,3"/>
+        <line x1="680" y1="313" x2="840" y2="313" stroke="#6b675c" stroke-width="1" stroke-dasharray="4,3"/>
 
         <!-- ============ bars ============ -->
         <!-- start: spreadsheet -->
-        <rect x="200" y="57" width="120" height="423" rx="2" fill="#ece7da" stroke="#6b675c" stroke-width="1.5"/>
-        <text x="260" y="46" font-family="'Geist Mono', monospace" font-size="13" font-weight="600" fill="#16150f" text-anchor="middle">5,684</text>
+        <rect x="200" y="79" width="120" height="401" rx="2" fill="#ece7da" stroke="#6b675c" stroke-width="1.5"/>
+        <text x="260" y="64" font-family="'Geist Mono', monospace" font-size="13" font-weight="600" fill="#16150f" text-anchor="middle">5,684</text>
         <text x="260" y="502" font-family="'Geist', sans-serif" font-size="12" font-weight="600" fill="#16150f" text-anchor="middle">Spreadsheet</text>
         <text x="260" y="518" font-family="'Geist Mono', monospace" font-size="8.5" letter-spacing="0.04em" fill="#8b8678" text-anchor="middle">LAST WEEKDAY × 1.05</text>
 
         <!-- delta 1: forecasts -->
-        <rect x="420" y="57" width="120" height="202" rx="2" fill="url(#replay-waterfall-hatch)" stroke="#2f6b45" stroke-width="1.5"/>
-        <text x="480" y="46" font-family="'Geist Mono', monospace" font-size="13" font-weight="600" fill="#2f6b45" text-anchor="middle">−2,553</text>
+        <rect x="420" y="79" width="120" height="180" rx="2" fill="url(#replay-waterfall-hatch)" stroke="#2f6b45" stroke-width="1.5"/>
+        <text x="480" y="64" font-family="'Geist Mono', monospace" font-size="13" font-weight="600" fill="#2f6b45" text-anchor="middle">−2,553</text>
         <text x="480" y="278" font-family="'Geist', sans-serif" font-size="12" font-weight="600" fill="#16150f" text-anchor="middle">Quantile forecasts</text>
         <text x="480" y="294" font-family="'Geist Mono', monospace" font-size="8.5" letter-spacing="0.04em" fill="#8b8678" text-anchor="middle">REPLACE THE ORDER RULE</text>
 
         <!-- delta 2: markdown engine -->
-        <rect x="580" y="259" width="120" height="56" rx="2" fill="url(#replay-waterfall-hatch)" stroke="#a45a12" stroke-width="1.5"/>
-        <text x="640" y="248" font-family="'Geist Mono', monospace" font-size="13" font-weight="600" fill="#a45a12" text-anchor="middle">−789</text>
+        <rect x="580" y="259" width="120" height="54" rx="2" fill="url(#replay-waterfall-hatch)" stroke="#a45a12" stroke-width="1.5"/>
+        <text x="640" y="248" font-family="'Geist Mono', monospace" font-size="13" font-weight="600" fill="#a45a12" text-anchor="middle">−757</text>
         <text x="640" y="334" font-family="'Geist', sans-serif" font-size="12" font-weight="600" fill="#16150f" text-anchor="middle">Markdown engine</text>
         <text x="640" y="350" font-family="'Geist Mono', monospace" font-size="8.5" letter-spacing="0.04em" fill="#8b8678" text-anchor="middle">CLEARS EXPIRING LOTS</text>
 
         <!-- end: daymark -->
-        <rect x="740" y="315" width="120" height="165" rx="2" fill="#2f6b45" stroke="#2f6b45" stroke-width="1.5"/>
-        <text x="800" y="304" font-family="'Geist Mono', monospace" font-size="13" font-weight="600" fill="#16150f" text-anchor="middle">2,342</text>
+        <rect x="740" y="313" width="120" height="167" rx="2" fill="#2f6b45" stroke="#2f6b45" stroke-width="1.5"/>
+        <text x="800" y="302" font-family="'Geist Mono', monospace" font-size="13" font-weight="600" fill="#16150f" text-anchor="middle">2,374</text>
         <text x="800" y="502" font-family="'Geist', sans-serif" font-size="12" font-weight="600" fill="#16150f" text-anchor="middle">Daymark policy</text>
-        <text x="800" y="518" font-family="'Geist Mono', monospace" font-size="8.5" letter-spacing="0.04em" fill="#8b8678" text-anchor="middle">−59% WASTE</text>
+        <text x="800" y="518" font-family="'Geist Mono', monospace" font-size="8.5" letter-spacing="0.04em" fill="#8b8678" text-anchor="middle">−58% WASTE</text>
 
         <!-- ============ annotations (2 max) ============ -->
         <text x="480" y="382" font-family="'Instrument Serif', Georgia, serif" font-style="italic" font-size="14" fill="#6b675c" text-anchor="middle">Demand is forecast from the store&#8217;s own history — weekday, holidays, paydays, promo calendar</text>
-        <text x="672" y="414" font-family="'Instrument Serif', Georgia, serif" font-style="italic" font-size="14" fill="#6b675c" text-anchor="middle">The trade-off: 1.1 service points and 2.5k more lost sales</text>
+        <text x="672" y="414" font-family="'Instrument Serif', Georgia, serif" font-style="italic" font-size="14" fill="#6b675c" text-anchor="middle">The trade-off: 0.6 service points and 1.3k more lost sales</text>
 
         <!-- ============ legend ============ -->
         <line x1="48" y1="556" x2="920" y2="556" stroke="#d9d3c4" stroke-width="1"/>

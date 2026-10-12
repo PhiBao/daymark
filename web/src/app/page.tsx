@@ -1,5 +1,5 @@
 import BriefClient from "@/components/brief/brief-client";
-import { BriefFacts, Health, getJSON } from "@/lib/api";
+import { BriefFacts, Health, Meta, getJSON } from "@/lib/api";
 
 export const instant = false;
 
@@ -13,16 +13,19 @@ export default async function Page(props: {
 
   let facts: BriefFacts | null = null;
   let model = "";
+  let stores: { store_nbr: number; city: string }[] = [];
   try {
-    const [f, h] = await Promise.all([
+    const [f, h, m] = await Promise.all([
       getJSON<{ facts: BriefFacts }>(`/api/brief/${store}?date=${date}`),
       getJSON<Health>(`/api/health`),
+      getJSON<Meta>(`/api/meta`),
     ]);
     facts = f.facts;
     model = h.llm.reported_model ?? h.llm.model ?? "";
+    stores = m.stores.map((s) => ({ store_nbr: s.store_nbr, city: s.city }));
   } catch {
     facts = null;
   }
 
-  return <BriefClient store={store} date={date} initialFacts={facts} model={model} />;
+  return <BriefClient store={store} date={date} initialFacts={facts} model={model} stores={stores} />;
 }

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daymark — pitch deck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper: #f4f1e9; --paper-2: #faf8f2; --ink: #16150f; --ink-2: #3c382e;
+      --muted: #6b675c; --soft: #8b8678; --rule: #d9d3c4; --rule-2: #e7e2d5;
+      --green: #2f6b45; --ochre: #a45a12; --red: #9f2d20;
+      --sans: 'Geist', system-ui, sans-serif; --serif: 'Instrument Serif', Georgia, serif; --mono: 'Geist Mono', ui-monospace, monospace;
+    }
+    html, body { background: #e8e4da; color: var(--ink); font-family: var(--sans); }
+    .deck { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 24px 0; }
+    .slide {
+      width: 1280px; height: 720px; background: var(--paper);
+      padding: 56px 64px; position: relative; border: 1px solid var(--rule);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .kicker { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    h1 { font-family: var(--serif); font-weight: 400; font-size: 58px; line-height: 1.05; letter-spacing: -0.02em; margin-top: 14px; }
+    h2 { font-family: var(--serif); font-weight: 400; font-size: 40px; line-height: 1.1; letter-spacing: -0.015em; margin-top: 12px; }
+    .dek { font-family: var(--serif); font-style: italic; font-size: 21px; color: var(--ink-2); margin-top: 14px; max-width: 60ch; }
+    .foot { position: absolute; left: 64px; right: 64px; bottom: 26px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); border-top: 1px solid var(--rule); padding-top: 10px; }
+    .grid { display: grid; gap: 28px; margin-top: 28px; }
+    .cols-2 { grid-template-columns: 1fr 1fr; }
+    .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .fig { font-family: var(--mono); font-weight: 600; }
+    .fig-l { font-size: 40px; line-height: 1; }
+    .fig-s { font-size: 13px; color: var(--muted); font-weight: 400; }
+    .lbl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+    ul { margin: 10px 0 0 0; list-style: none; }
+    li { margin-bottom: 10px; font-size: 16.5px; line-height: 1.45; }
+    li::before { content: "—"; color: var(--soft); margin-right: 10px; }
+    .rule { border-top: 1px solid var(--rule); margin: 22px 0 0; }
+    .quote { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.35; color: var(--ink-2); max-width: 34ch; }
+    .tag { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; border: 1px solid var(--ink); padding: 3px 8px; margin-right: 6px; text-transform: uppercase; }
+    .green { color: var(--green); } .ochre { color: var(--ochre); } .red { color: var(--red); }
+    table { border-collapse: collapse; margin-top: 18px; font-size: 16px; width: 100%; }
+    th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 8px 10px 8px 0; font-weight: 500; }
+    td { font-family: var(--mono); padding: 9px 10px 9px 0; border-top: 1px solid var(--rule-2); }
+    td.name { font-family: var(--sans); }
+    tr.hl td { border-top: 2px solid var(--green); border-bottom: 2px solid var(--green); }
+    .split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; flex: 1; }
+    .sidebar { border-left: 1px solid var(--rule); padding-left: 28px; }
+    @media print {
+      html, body { background: #fff; }
+      .deck { gap: 0; padding: 0; }
+      .slide { border: none; page-break-after: always; }
+      @page { size: 1280px 720px; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1 · title -->
+  <section class="slide">
+    <div class="kicker">AMD Developer Hackathon · ACT III · Reinvent Commerce</div>
+    <h1>Daymark</h1>
+    <p class="dek">The morning edition for perishable retail. Every number traceable, every claim replayable, every decision signed — with Gemma running on AMD Instinct.</p>
+    <div class="grid cols-3" style="margin-top:auto">
+      <div><div class="fig fig-l green">−58%</div><div class="fig-s">waste units vs the spreadsheet rule, 10 weeks of real demand</div></div>
+      <div><div class="fig fig-l">+27%</div><div class="fig-s">forecast skill vs same-weekday baseline, out of sample</div></div>
+      <div><div class="fig fig-l">&lt;$0.01</div><div class="fig-s">inference cost per brief on measured AMD throughput</div></div>
+    </div>
+    <div class="foot"><span>Daymark · the model decides, the LLM explains, the ledger proves</span><span>1 / 8</span></div>
+  </section>
+
+  <!-- 2 · problem -->
+  <section class="slide">
+    <div class="kicker">The problem</div>
+    <h2>Fresh food dies on a schedule — and the decision window is 30 minutes</h2>
+    <div class="split" style="margin-top:26px">
+      <div>
+        <ul>
+          <li>Every store, every morning: how much to order, what to mark down, what to promote — from memory and spreadsheets.</li>
+          <li>Two leaks: <strong>shrink</strong> (thrown-away fresh stock) and <strong>lost sales</strong> (empty shelves on the day demand peaks).</li>
+          <li>The EU wastes <strong>153M tonnes</strong> of food a year; the UN target is to halve retail waste by 2030.</li>
+          <li>Enterprise AI category management exists — for big chains, at big-chain prices. Mid-size chains have nothing.</li>
+        </ul>
+      </div>
+      <div class="sidebar">
+        <div class="lbl">Who we serve</div>
+        <div class="quote" style="margin-top:14px">The category manager of a mid-size grocery chain. Not a data scientist. Decides before 7am.</div>
+      </div>
+    </div>
+    <div class="foot"><span>Sources: Feedback EU; UN SDG 12.3; industry shrink ranges 3–6% of fresh sales</span><span>2 / 8</span></div>
+  </section>
+
+  <!-- 3 · product -->
+  <section class="slide">
+    <div class="kicker">The product</div>
+    <h2>A brief, not a dashboard</h2>
+    <div class="split" style="margin-top:26px">
+      <div>
+        <ul>
+          <li><strong>Orders</strong> for tomorrow — newsvendor targets from quantile forecasts, with the reasons attached.</li>
+          <li><strong>Markdowns</strong> before expiry — costed, with recovered value per line.</li>
+          <li><strong>Promotions</strong> with measured lift from the store's own history, plus ready-to-print creative.</li>
+          <li><strong>Watchlist</strong> where the model is least certain — uncertainty made visible.</li>
+          <li>One click to approve, edit, or flag. Every decision signed into a tamper-evident ledger.</li>
+        </ul>
+      </div>
+      <div class="sidebar">
+        <div class="lbl">Design principle</div>
+        <div class="quote" style="margin-top:14px">If it can't be checked, it isn't written.<br><span style="font-size:20px;color:var(--muted)">Facts come from the forecaster; words come from the model; numbers are verified before display.</span></div>
+      </div>
+    </div>
+    <div class="foot"><span>Paper-like front page · numbers in mono · nothing decorative</span><span>3 / 8</span></div>
+  </section>
+
+  <!-- 4 · proof -->
+  <section class="slide">
+    <div class="kicker">The proof · deterministic replay</div>
+    <h2>Same demand. Three policies. Exact arithmetic.</h2>
+    <table>
+      <thead><tr><th>Policy · store 2, 70 days</th><th>Waste units</th><th>Lost units</th><th>Service</th><th>Waste value</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Spreadsheet (last weekday × 1.05)</td><td>5,684</td><td>26,509</td><td>87.8%</td><td>$24,190</td></tr>
+        <tr><td class="name">Forecast-only</td><td>3,131</td><td>4,494</td><td>97.9%</td><td>$10,902</td></tr>
+        <tr class="hl"><td class="name"><strong>Daymark</strong> (forecasts + markdowns)</td><td class="green"><strong>2,374</strong></td><td>5,842</td><td>97.4%</td><td class="green"><strong>$8,515</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="grid cols-3" style="margin-top:auto">
+      <div><div class="fig fig-l green">−58%</div><div class="fig-s">waste vs spreadsheet · +9.6 service pts · +24,982 units sold</div></div>
+      <div><div class="fig fig-l ochre">−24%</div><div class="fig-s">the markdown engine alone — with its cost shown openly</div></div>
+      <div><div class="fig fig-s" style="margin-top:6px">Reproduce exactly:<br><span style="color:var(--ink-2)">curl /api/replay?store=2</span></div></div>
+    </div>
+    <div class="foot"><span>Deterministic Rust simulator · demand = recorded sales · shelf life and prices declared assumptions</span><span>4 / 8</span></div>
+  </section>
+
+  <!-- 5 · AMD -->
+  <section class="slide">
+    <div class="kicker">Why AMD is load-bearing</div>
+    <h2>Open models on AMD make per-store AI economics real</h2>
+    <div class="grid cols-3" style="margin-top:30px">
+      <div>
+        <div class="lbl">Serving stack</div>
+        <ul style="margin-top:12px">
+          <li>Gemma served by vLLM on ROCm</li>
+          <li>AMD Instinct · AMD Developer Cloud</li>
+          <li>OpenAI-compatible endpoint</li>
+        </ul>
+      </div>
+      <div>
+        <div class="lbl">Measured, not claimed</div>
+        <ul style="margin-top:12px">
+          <li>TTFT p50/p95, decode tok/s at concurrency 1/4/8</li>
+          <li>$/1M tokens derived from the GPU price</li>
+          <li>Per-brief cost shown in the product</li>
+        </ul>
+      </div>
+      <div>
+        <div class="lbl">Why it matters</div>
+        <ul style="margin-top:12px">
+          <li>Retail data never leaves the retailer</li>
+          <li>A brief costs a fraction of a cent</li>
+          <li>Feasible per store, not just per chain</li>
+        </ul>
+      </div>
+    </div>
+    <div class="rule" style="margin-top:auto"></div>
+    <div class="grid cols-3" style="margin-top:20px">
+      <div><div class="fig fig-s">Language layer</div><div class="fig fig-l" style="font-size:26px">Gemma · vLLM</div></div>
+      <div><div class="fig fig-s">Decision core</div><div class="fig fig-l" style="font-size:26px">Rust · deterministic</div></div>
+      <div><div class="fig fig-s">Forecaster</div><div class="fig fig-l" style="font-size:26px">LightGBM quantiles</div></div>
+    </div>
+    <div class="foot"><span>Benchmark harness: engine/daymark/bench.py → artifacts/benchmark.json</span><span>5 / 8</span></div>
+  </section>
+
+  <!-- 6 · trust -->
+  <section class="slide">
+    <div class="kicker">Trust is the product</div>
+    <h2>Four checks judges (and retailers) can run</h2>
+    <div class="grid cols-2" style="margin-top:30px">
+      <div>
+        <ul>
+          <li><strong>Number grounding.</strong> Every figure in the copy is verified against the facts payload; failures regenerate once, then fall back to a labelled template. 17/17 figures checked in the demo brief.</li>
+          <li><strong>Out-of-sample forecasts.</strong> WAPE 26.7% · skill +27.1% · band coverage 78.8% · bias −1.5% on 54,872 held-out item-days.</li>
+        </ul>
+      </div>
+      <div>
+        <ul>
+          <li><strong>Tamper-evident ledger.</strong> Decisions are SHA-256 chained; the API re-verifies on every read and tests prove tampering is detected.</li>
+          <li><strong>Honest economics.</strong> Revenue is not margin: markdowns trade a little revenue for lower waste — the replay shows the trade-off, not just the win.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot"><span>docs/PROOF.md maps every claim to its evidence · docs/SECURITY.md reviews the threat model</span><span>6 / 8</span></div>
+  </section>
+
+  <!-- 7 · market -->
+  <section class="slide">
+    <div class="kicker">Why now · why this grows</div>
+    <h2>From one store to a category</h2>
+    <div class="split" style="margin-top:24px">
+      <div>
+        <ul>
+          <li><strong>Wedge:</strong> fresh-section decisions for a single store — the highest-shrink, highest-uncertainty category.</li>
+          <li><strong>Expansion:</strong> POS/ERP connectors → multi-store roll-up → supplier orders → delivery-note automation (Evolus working prototype in the repo).</li>
+          <li><strong>Timing:</strong> EU food-waste regulation, margin pressure, and open-model inference economics crossing the per-store threshold.</li>
+          <li><strong>Model:</strong> per-store/month SaaS; inference cost visible and tiny; self-hosting keeps retailer data home.</li>
+        </ul>
+      </div>
+      <div class="sidebar">
+        <div class="lbl">Distribution</div>
+        <ul style="margin-top:12px">
+          <li>Regional grocery associations</li>
+          <li>Retail-ops communities</li>
+          <li>Consultancies (Vibe / PwC world)</li>
+          <li>One pilot store → the chain</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot"><span>Market evidence: Afresh, Shelf Engine, Revionics — enterprise-only today</span><span>7 / 8</span></div>
+  </section>
+
+  <!-- 8 · close -->
+  <section class="slide">
+    <div class="kicker">Close</div>
+    <h1 style="font-size:64px;max-width:22ch">The model decides.<br>The LLM explains.<br><span class="green">The ledger proves.</span></h1>
+    <div class="grid cols-2" style="margin-top:auto">
+      <div>
+        <div class="lbl">Working demo</div>
+        <div class="fig" style="font-size:16px;margin-top:8px">github.com/PhiBao/daymark</div>
+        <div class="fig fig-s" style="margin-top:6px">Rust core · Next.js edition · Gemma on AMD Instinct · MIT</div>
+      </div>
+      <div style="text-align:right">
+        <span class="tag">Reinvent Commerce</span><span class="tag">AMD Developer Cloud</span><span class="tag">ROCm</span>
+      </div>
+    </div>
+    <div class="foot"><span>Daymark · ACT III submission</span><span>8 / 8</span></div>
+  </section>
+
+</div>
+</body>
+</html>

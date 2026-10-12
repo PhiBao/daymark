@@ -103,11 +103,13 @@ export default function BriefClient({
   date,
   initialFacts,
   model,
+  stores,
 }: {
   store: number;
   date: string;
   initialFacts: BriefFacts | null;
   model: string;
+  stores: { store_nbr: number; city: string }[];
 }) {
   const [facts] = useState<BriefFacts | null>(initialFacts);
   const [brief, setBrief] = useState<BriefResponse | null>(null);
@@ -132,7 +134,14 @@ export default function BriefClient({
   }
 
   const narrative: Narrative | null = brief?.narrative ?? null;
-  const scale = Math.max(...facts.orders.map((o) => Math.max(o.p90, o.onhand, o.suggest_qty)), 10);
+  // Robust scale: the 90th percentile of upper bands, so a single large item
+  // does not flatten every interval bar into a dot.
+  const scale = (() => {
+    const p90s = facts.orders.map((o) => o.p90).sort((a, b) => a - b);
+    if (!p90s.length) return 10;
+    const idx = Math.min(p90s.length - 1, Math.floor(0.9 * p90s.length));
+    return Math.max(10, p90s[idx] * 1.1);
+  })();
 
   async function printBrief() {
     setPrinting(true);
@@ -176,6 +185,26 @@ export default function BriefClient({
           Store {facts.store} · brief for {facts.generated_for} · printed by {model || "—"}
         </div>
       </div>
+
+      {stores.length > 1 ? (
+        <nav className="mt-2 flex flex-wrap items-center gap-2 text-[11px] text-[var(--color-muted)]">
+          <span className="tracking-[0.14em] uppercase">Chain</span>
+          {stores.map((s) => (
+            <a
+              key={s.store_nbr}
+              href={`/?store=${s.store_nbr}&date=${date}`}
+              className={`mono border px-2 py-0.5 ${
+                s.store_nbr === facts.store
+                  ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)]"
+                  : "border-[var(--color-rule)] hover:border-[var(--color-ink)] hover:text-[var(--color-ink)]"
+              }`}
+            >
+              {s.store_nbr} · {s.city}
+            </a>
+          ))}
+          <span className="italic">one brief per store, every morning</span>
+        </nav>
+      ) : null}
 
       {error ? (
         <div className="rule-top mt-4 border border-[var(--color-red)] bg-[var(--color-red-soft)] p-3 text-[13px] text-[var(--color-red)]">

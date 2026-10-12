@@ -174,8 +174,10 @@ app, ASR, video generation.
 
 - **Real data:** Corporación Favorita grocery sales (public Kaggle benchmark) — cite access + sample.
 - **Real forecast metrics:** WAPE/MASE by category on held-out weeks, committed + in UI.
-- **Exact replay:** deterministic simulator, seeded, policy vs baseline on identical demand;
-  waste/lost-sales/margin deltas reproducible from the repo (`make replay`).
+- **Exact replay:** deterministic simulator; policy vs baseline on identical demand;
+  waste / lost-sales / service deltas reproducible from the repo (`make replay`).
+  Canonical run (store 2, 2017-06-05..2017-08-13): waste 5,684 → 3,131 → 2,374 units,
+  service 87.8% → 97.9% → 97.4%, −58% waste and +9.6 service points vs the spreadsheet policy.
 - **Real AMD runs:** benchmark table from actual vLLM-ROCm runs (model, GPU, quant, tokens/s,
   TTFT, $/brief) + in-app AMD card + raw logs committed.
 - **Honesty:** assumptions page (censored demand, simulator calibration, modeled promo

@@ -55,13 +55,16 @@ and shelf life for all three policies, deterministic simulator (Rust):
 
 | Policy | Waste units | Lost units | Service level | Revenue |
 |---|---|---|---|---|
-| Spreadsheet (last weekday × 1.05) | 5,684 | 26,509 | 87.8% | $190,102 |
-| Forecast-only (newsvendor) | 3,131 | 4,494 | 97.9% | $212,117 |
-| **Daymark (forecasts + markdowns)** | **2,342** | 7,013 | 96.8% | **$215,251** |
+| Spreadsheet (last weekday × 1.05) | 5,684 | 26,509 | 87.8% | $464,892 |
+| Forecast-only (newsvendor) | 3,131 | 4,494 | 97.9% | $533,290 |
+| **Daymark (forecasts + markdowns)** | **2,374** | 5,842 | 97.4% | $526,410 |
 
-- **−59% waste** and **+9.1 service points** vs the spreadsheet rule; **+25,149 units sold**.
-- The markdown engine alone (vs forecast-only): **−789 waste units**, at a visible
-  trade-off of 1.1 service points and 2.5k more lost sales — shown, not hidden.
+- **−58% waste** and **+9.6 service points** vs the spreadsheet rule; **+24,982 units sold**.
+- The markdown engine alone (vs forecast-only): **−757 waste units (−24%)**, at a visible
+  trade-off of 0.6 service points and 1.3k more lost sales — shown, not hidden.
+- Revenue is not margin: markdowns sell units at a discount, so the revenue column is
+  slightly lower than forecast-only while waste — a real cost — is $2,387 lower. Net
+  margin needs cost-of-goods data (roadmap).
 - Reproduce: `make replay` (or `curl localhost:8787/api/replay?store=2`).
 
 ## Forecast quality (out-of-sample, held-out weeks)
