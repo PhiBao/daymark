@@ -99,7 +99,9 @@ Next.js front end: an editorial "morning edition", deliberately not a dashboard.
 
 - [ ] Record the video (`docs/DEMO.md`), upload (YouTube unlisted is fine), fill `[VIDEO_URL]`
 - [ ] Deploy the demo stack and fill `[DEMO_URL]` (see `infra/docker/compose.yml`)
-- [ ] Run the AMD benchmark and commit `engine/artifacts/benchmark.json`
+- [ ] Run the AMD benchmark and commit `engine/artifacts/benchmark.json` — then
+      verify the "<$0.01 per brief" claim on the cover/README against the measured
+      `usd_per_1m_tokens` and adjust the wording if it lands higher
 - [ ] Re-shoot `docs/assets/brief.png` and `docs/assets/replay.png` once the real
       Gemma endpoint is serving (the header shows the model id)
 - [ ] Re-run `make smoke` and paste the fresh replay numbers if the simulator changed
