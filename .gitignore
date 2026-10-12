@@ -1,0 +1,40 @@
+# --- data (never commit raw datasets) ---
+data/raw/
+data/interim/
+*.parquet.tmp
+
+# --- rust ---
+backend/target/
+target/
+
+# --- python ---
+engine/.venv/
+engine/__pycache__/
+**/__pycache__/
+*.pyc
+engine/artifacts/tmp/
+
+# --- node ---
+web/node_modules/
+web/.next/
+web/out/
+*.tsbuildinfo
+.pnpm-store/
+
+# --- misc ---
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/
+.vscode/
+*.log
+dist/
+tmp/
+
+# runtime state
+backend/state/
+
+# agent process docs (kept local, not part of the submission)
+AGENTS.md
+FOUNDER.md

@@ -1,0 +1,46 @@
+# Daymark demo stack.
+#
+#   docker compose -f infra/docker/compose.yml up --build
+#
+# Host paths: build from the repository root:
+#   docker compose -f infra/docker/compose.yml up --build
+#
+# Env:
+#   DAYMARK_LLM_BASE_URL / DAYMARK_LLM_MODEL / DAYMARK_LLM_API_KEY → AMD vLLM endpoint
+#   NEXT_PUBLIC_API_URL → where the browser reaches the API (default localhost:8787)
+
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/docker/backend.Dockerfile
+    environment:
+      DAYMARK_DATA_DIR: /data/artifacts
+      DAYMARK_STATE_DIR: /data/state
+      DAYMARK_LLM_BASE_URL: ${DAYMARK_LLM_BASE_URL:-http://127.0.0.1:8000/v1}
+      DAYMARK_LLM_MODEL: ${DAYMARK_LLM_MODEL:-google/gemma-3-27b-it}
+      DAYMARK_LLM_API_KEY: ${DAYMARK_LLM_API_KEY:-daymark}
+      DAYMARK_GPU_NAME: ${DAYMARK_GPU_NAME:-AMD Instinct MI300X (AMD Developer Cloud)}
+      DAYMARK_GPU_HOURLY_USD: ${DAYMARK_GPU_HOURLY_USD:-1.99}
+      RUST_LOG: daymark_api=info
+    volumes:
+      - ../../engine/artifacts:/data/artifacts:ro
+      - daymark-state:/data/state
+    ports:
+      - "8787:8787"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ../..
+      dockerfile: infra/docker/web.Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8787}
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+volumes:
+  daymark-state:

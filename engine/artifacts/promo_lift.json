@@ -1,0 +1,61 @@
+{
+  "overall_pct": 28.3,
+  "n": 3456,
+  "by_family": {
+    "BREAD/BAKERY": {
+      "median_pct": 25.6,
+      "p25_pct": 0.2,
+      "p75_pct": 56.7,
+      "n": 496
+    },
+    "DAIRY": {
+      "median_pct": 22.2,
+      "p25_pct": 3.7,
+      "p75_pct": 41.3,
+      "n": 506
+    },
+    "DELI": {
+      "median_pct": 33.4,
+      "p25_pct": 4.9,
+      "p75_pct": 68.3,
+      "n": 506
+    },
+    "EGGS": {
+      "median_pct": 29.6,
+      "p25_pct": 7.9,
+      "p75_pct": 69.4,
+      "n": 410
+    },
+    "MEATS": {
+      "median_pct": 12.0,
+      "p25_pct": -12.7,
+      "p75_pct": 50.2,
+      "n": 617
+    },
+    "POULTRY": {
+      "median_pct": 17.6,
+      "p25_pct": -18.8,
+      "p75_pct": 65.7,
+      "n": 416
+    },
+    "PREPARED FOODS": {
+      "median_pct": 69.3,
+      "p25_pct": 18.7,
+      "p75_pct": 357.4,
+      "n": 193
+    },
+    "PRODUCE": {
+      "median_pct": 144.0,
+      "p25_pct": 64.3,
+      "p75_pct": 908.1,
+      "n": 203
+    },
+    "SEAFOOD": {
+      "median_pct": 32.1,
+      "p25_pct": 12.8,
+      "p75_pct": 54.0,
+      "n": 109
+    }
+  },
+  "note": "median same-day-of-week ratio of mean sales on promotion vs not, per store-item; +1 smoothing."
+}

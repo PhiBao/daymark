@@ -1,0 +1,49 @@
+{
+  "source": "Corporacion Favorita grocery sales (Kaggle benchmark), mirrored on HuggingFace as hsnalmasri/favorita",
+  "source_url": "https://huggingface.co/datasets/hsnalmasri/favorita",
+  "stores": [
+    2,
+    3,
+    4
+  ],
+  "families": [
+    "BREAD/BAKERY",
+    "DAIRY",
+    "DELI",
+    "EGGS",
+    "MEATS",
+    "POULTRY",
+    "PREPARED FOODS",
+    "PRODUCE",
+    "SEAFOOD"
+  ],
+  "items": 242,
+  "rows": 1218014,
+  "date_min": "2013-01-02",
+  "date_max": "2017-08-15",
+  "assumptions": {
+    "shelf_life_days_by_family": {
+      "PRODUCE": 5,
+      "BREAD/BAKERY": 3,
+      "DAIRY": 10,
+      "MEATS": 4,
+      "SEAFOOD": 2,
+      "DELI": 4,
+      "POULTRY": 3,
+      "EGGS": 21,
+      "PREPARED FOODS": 3
+    },
+    "unit_price_usd_by_family": {
+      "PRODUCE": 1.2,
+      "BREAD/BAKERY": 1.6,
+      "DAIRY": 2.4,
+      "MEATS": 4.8,
+      "SEAFOOD": 6.0,
+      "DELI": 3.2,
+      "POULTRY": 3.6,
+      "EGGS": 2.2,
+      "PREPARED FOODS": 3.4
+    },
+    "note": "Favorita ships no inventory, expiry or price data. Shelf life and prices are our declared assumptions; unit-based metrics do not depend on prices."
+  }
+}

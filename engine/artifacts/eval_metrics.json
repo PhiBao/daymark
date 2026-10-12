@@ -1,0 +1,95 @@
+{
+  "overall": {
+    "n": 54872,
+    "wape_p50_pct": 26.73,
+    "mae_p50": 5.17,
+    "pinball": {
+      "p10": 1.0768,
+      "p50": 2.5851,
+      "p90": 1.3028
+    },
+    "coverage_p10_p90_pct": 78.78,
+    "baseline_naive7_wape_pct": 36.69,
+    "baseline_ma28_wape_pct": 35.22,
+    "skill_vs_naive7_pct": 27.14,
+    "bias_pct": -1.46
+  },
+  "by_family": {
+    "BREAD/BAKERY": {
+      "n": 6536,
+      "wape_p50_pct": 28.09,
+      "baseline_naive7_wape_pct": 39.19,
+      "skill_vs_naive7_pct": 28.32,
+      "coverage_p10_p90_pct": 80.06,
+      "pinball_p50": 2.0513
+    },
+    "DAIRY": {
+      "n": 6840,
+      "wape_p50_pct": 26.34,
+      "baseline_naive7_wape_pct": 37.93,
+      "skill_vs_naive7_pct": 30.56,
+      "coverage_p10_p90_pct": 78.64,
+      "pinball_p50": 1.9001
+    },
+    "DELI": {
+      "n": 6840,
+      "wape_p50_pct": 47.01,
+      "baseline_naive7_wape_pct": 66.75,
+      "skill_vs_naive7_pct": 29.57,
+      "coverage_p10_p90_pct": 78.38,
+      "pinball_p50": 1.3048
+    },
+    "EGGS": {
+      "n": 6840,
+      "wape_p50_pct": 32.08,
+      "baseline_naive7_wape_pct": 43.8,
+      "skill_vs_naive7_pct": 26.75,
+      "coverage_p10_p90_pct": 78.38,
+      "pinball_p50": 1.4976
+    },
+    "MEATS": {
+      "n": 6840,
+      "wape_p50_pct": 32.56,
+      "baseline_naive7_wape_pct": 42.15,
+      "skill_vs_naive7_pct": 22.77,
+      "coverage_p10_p90_pct": 80.26,
+      "pinball_p50": 2.5968
+    },
+    "POULTRY": {
+      "n": 6840,
+      "wape_p50_pct": 33.16,
+      "baseline_naive7_wape_pct": 45.9,
+      "skill_vs_naive7_pct": 27.76,
+      "coverage_p10_p90_pct": 78.67,
+      "pinball_p50": 3.4793
+    },
+    "PREPARED FOODS": {
+      "n": 5700,
+      "wape_p50_pct": 34.57,
+      "baseline_naive7_wape_pct": 43.4,
+      "skill_vs_naive7_pct": 20.34,
+      "coverage_p10_p90_pct": 79.37,
+      "pinball_p50": 0.9862
+    },
+    "PRODUCE": {
+      "n": 6840,
+      "wape_p50_pct": 20.07,
+      "baseline_naive7_wape_pct": 27.57,
+      "skill_vs_naive7_pct": 27.19,
+      "coverage_p10_p90_pct": 76.52,
+      "pinball_p50": 6.8773
+    },
+    "SEAFOOD": {
+      "n": 1596,
+      "wape_p50_pct": 35.68,
+      "baseline_naive7_wape_pct": 52.12,
+      "skill_vs_naive7_pct": 31.55,
+      "coverage_p10_p90_pct": 79.39,
+      "pinball_p50": 1.2862
+    }
+  },
+  "window": [
+    "2017-06-01",
+    "2017-08-15"
+  ]
+}
