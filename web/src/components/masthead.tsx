@@ -29,7 +29,7 @@ const NAV = [
 export function Masthead() {
   return (
     <header className="rule-double mb-6 border-b border-[var(--color-rule)] bg-[var(--color-paper)]">
-      <div className="mx-auto flex max-w-[1180px] items-center justify-between px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-y-2 px-4 py-3 sm:px-6">
         <Link href="/" aria-label="Daymark home" className="hover:opacity-80">
           <Wordmark />
         </Link>
@@ -38,7 +38,7 @@ export function Masthead() {
             <Link
               key={n.href}
               href={n.href}
-              className="rounded-[2px] px-3 py-1.5 text-[var(--color-ink-2)] transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
+              className="rounded-[2px] px-2 py-1.5 text-[var(--color-ink-2)] transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)] sm:px-3"
             >
               {n.label}
             </Link>
